@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus.v2"
 )
 
 type (

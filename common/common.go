@@ -1,4 +1,4 @@
-package main
+package common
 
 import (
 	"encoding/json"
@@ -11,25 +11,6 @@ import (
 )
 
 type (
-	resources struct {
-		CPUs  float64 `json:"cpus"`
-		Disk  float64 `json:"disk"`
-		Mem   float64 `json:"mem"`
-		Ports ranges  `json:"ports"`
-	}
-
-	task struct {
-		Name        string    `json:"name"`
-		ID          string    `json:"id"`
-		ExecutorID  string    `json:"executor_id"`
-		FrameworkID string    `json:"framework_id"`
-		SlaveID     string    `json:"slave_id"`
-		State       string    `json:"state"`
-		Labels      []label   `json:"labels"`
-		Resources   resources `json:"resources"`
-		Statuses    []status  `json:"statuses"`
-	}
-
 	label struct {
 		Key   string `json:"key"`
 		Value string `json:"value"`
@@ -47,16 +28,16 @@ var (
 	notFoundInMap = errors.New("Couldn't find key in map")
 )
 
-type settableCounterVec struct {
+type SettableCounterVec struct {
 	desc   *prometheus.Desc
 	values []prometheus.Metric
 }
 
-func (c *settableCounterVec) Describe(ch chan<- *prometheus.Desc) {
+func (c *SettableCounterVec) Describe(ch chan<- *prometheus.Desc) {
 	ch <- c.desc
 }
 
-func (c *settableCounterVec) Collect(ch chan<- prometheus.Metric) {
+func (c *SettableCounterVec) Collect(ch chan<- prometheus.Metric) {
 	for _, v := range c.values {
 		ch <- v
 	}
@@ -64,7 +45,11 @@ func (c *settableCounterVec) Collect(ch chan<- prometheus.Metric) {
 	c.values = nil
 }
 
-func (c *settableCounterVec) Set(value float64, labelValues ...string) {
+func (c *SettableCounterVec) Set(value float64, labelValues ...string) {
+	c.values = append(c.values, prometheus.MustNewConstMetric(c.desc, prometheus.CounterValue, value, labelValues...))
+}
+
+func (c *SettableCounterVec) SetGauge(value float64, labelValues ...string) {
 	c.values = append(c.values, prometheus.MustNewConstMetric(c.desc, prometheus.CounterValue, value, labelValues...))
 }
 
@@ -111,7 +96,7 @@ func gauge(subsystem, name, help string, labels ...string) *prometheus.GaugeVec 
 	}, labels)
 }
 
-func counter(subsystem, name, help string, labels ...string) *settableCounterVec {
+func Counter(subsystem, name, help string, labels ...string) *SettableCounterVec {
 	desc := prometheus.NewDesc(
 		prometheus.BuildFQName("mesos", subsystem, name),
 		help,
@@ -119,7 +104,21 @@ func counter(subsystem, name, help string, labels ...string) *settableCounterVec
 		prometheus.Labels{},
 	)
 
-	return &settableCounterVec{
+	return &SettableCounterVec{
+		desc:   desc,
+		values: nil,
+	}
+}
+
+func CustomCounter(namespace, name, help string, labels ...string) *SettableCounterVec {
+	desc := prometheus.NewDesc(
+		prometheus.BuildFQName(namespace, "", name),
+		help,
+		labels,
+		prometheus.Labels{},
+	)
+
+	return &SettableCounterVec{
 		desc:   desc,
 		values: nil,
 	}
@@ -158,14 +157,12 @@ func (httpClient *httpClient) fetchAndDecode(endpoint string, target interface{}
 	res, err := httpClient.Do(req)
 	if err != nil {
 		log.Printf("Error fetching %s: %s", url, err)
-		errorCounter.Inc()
 		return false
 	}
 	defer res.Body.Close()
 
 	if err := json.NewDecoder(res.Body).Decode(&target); err != nil {
 		log.Printf("Error decoding response body from %s: %s", url, err)
-		errorCounter.Inc()
 		return false
 	}
 
@@ -184,7 +181,6 @@ func (c *metricCollector) Collect(ch chan<- prometheus.Metric) {
 			} else {
 				log.Printf("Error extracting metric: %s", err)
 			}
-			errorCounter.Inc()
 			continue
 		}
 		cm.Collect(ch)

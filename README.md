@@ -24,6 +24,8 @@ Usage of n-exporter:
        	Expose metrics from slave running on this URL
   -timeout duration
        	Master polling timeout (default 5s)
+  -target_interval 
+        interval for each target,if targetNo == 2 ,then the same target interval is 2 * target_interval
 ```
 
 Usually you would run one exporter with `-master` pointing to the current
