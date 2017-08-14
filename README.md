@@ -2,6 +2,12 @@
 Exporter for Mesos master and agent metrics
 Exporter for Consul server
 
+[![version](https://img.shields.io/github/tag/needkane/n-exporter.svg)](https://github.com/needkane/n-exporter/releases/latest)
+[![API Reference](
+https://godoc.org/github.com/needkane/n-exporter?status.svg)](https://godoc.org/github.com/tendermint/tendermint)
+[![license](https://img.shields.io/github/license/needkane/n-exporter.svg)](https://github.com/needkane/n-exporter/blob/master/LICENSE)
+[![](https://tokei.rs/b1/github/needkane/n-exporter?category=lines)](https://github.com/needkane/n-exporter)
+
 ## Installing
 ```sh
 $ go get github.com/needkane/n-exporter
