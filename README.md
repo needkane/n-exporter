@@ -11,7 +11,7 @@ https://godoc.org/github.com/needkane/n-exporter?status.svg)](https://godoc.org/
 
 Branch    | Buid Status | Coverage | Report Card
 ----------|-------|----------|-------------
-master    | [![Build Status](https://travis-ci.org/needkane/n-exporter.svg?branch=master)](https://travis-ci.org/needkane/n-exporter)| [![codecov](https://codecov.io/gh/needkane/n-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/needkane/n-exporter) | [![Go Report Card](https://goreportcard.com/badge/github.com/needkane/n-exporter/tree/master)](https://goreportcard.com/report/github.com/needkane/n-exporter/tree/master)
+master    | [![Build Status](https://travis-ci.org/needkane/n-exporter.svg?branch=master)](https://travis-ci.org/needkane/n-exporter)| [![codecov](http://codecov.io/gh/needkane/n-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/needkane/n-exporter) | [![Go Report Card](http://goreportcard.com/badge/github.com/needkane/n-exporter/tree/master)](https://goreportcard.com/report/github.com/needkane/n-exporter/tree/master)
 ## Installing
 ```sh
 $ go get github.com/needkane/n-exporter
