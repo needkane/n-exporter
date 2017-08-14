@@ -12,7 +12,6 @@ https://godoc.org/github.com/needkane/n-exporter?status.svg)](https://godoc.org/
 Branch    | Buid Status | Coverage | Report Card
 ----------|-------|----------|-------------
 develop   |[![Build Status](https://travis-ci.org/needknae/n-exporter.svg?branch=develop)](https://travis-ci.org/needkane/n-exporter)| [![codecov](https://codecov.io/gh/needkane/n-exporter/branch/develop/graph/badge.svg)](https://codecov.io/gh/needkane/n-exporter)  | [![Go Report Card](https://goreportcard.com/badge/github.com/needkane/n-exporter/tree/develop)](https://goreportcard.com/report/github.com/needkane/n-exporter/tree/develop)
-
 master    | [![Build Status](https://travis-ci.org/needkane/n-exporter.svg?branch=master)](https://travis-ci.org/needkane/n-exporter)| [![codecov](https://codecov.io/gh/needkane/n-exporter/branch/master/graph/badge.svg)](https://codecov.io/gh/needkane/n-exporter) | [![Go Report Card](https://goreportcard.com/badge/github.com/needkane/n-exporter/tree/master)](https://goreportcard.com/report/github.com/needkane/n-exporter/tree/master)
 ## Installing
 ```sh
