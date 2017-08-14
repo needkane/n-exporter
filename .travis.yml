@@ -4,11 +4,11 @@ go:
   - master
 env:
   global:
-    - TEST=1
+    - CODECOV_TOKEN: 37544bae-172f-415c-9422-2b619c324f05
 
 install:
-  - ls $HOME/gopath/src
   - export SRC=$HOME/gopath/src
+  - cd $SRC;ls ./
   - mkdir -p $SRC/github.com/needkane
   - export TRAVIS_BUILD_DIR=$SRC/github.com/needkane/n-exporter
   - cd $TRAVIS_BUILD_DIR
