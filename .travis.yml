@@ -1,7 +1,6 @@
 language: go
 go:
   - 1.8
-  - master
 env:
   global:
     - CODECOV_TOKEN: 37544bae-172f-415c-9422-2b619c324f05
@@ -12,5 +11,6 @@ install:
   - mkdir -p $SRC/github.com/needkane
   - export TRAVIS_BUILD_DIR=$SRC/github.com/needkane/n-exporter
   - cd $TRAVIS_BUILD_DIR
-  - go get github.com/needkane/n-exporter
   - go build
+  - istanbul cover node_modules/mocha/bin/_mocha
+  - cat ./coverage/coverage.json | node_modules/codecov.io/bin/codecov.io.js
