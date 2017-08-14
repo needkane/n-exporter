@@ -12,6 +12,7 @@ install:
   - export TRAVIS_BUILD_DIR=$SRC/github.com/needkane/n-exporter
   - cd $TRAVIS_BUILD_DIR
   - go get github.com/needkane/n-exporter
-  - go build main.go
   - istanbul cover node_modules/mocha/bin/_mocha
   - cat ./coverage/coverage.json | node_modules/codecov.io/bin/codecov.io.js
+  - go build
+ 
