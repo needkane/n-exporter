@@ -1,0 +1,16 @@
+language: go
+go:
+  - 1.8
+  - master
+env:
+  global:
+    - TEST=1
+
+install:
+  - ls $HOME/gopath/src
+  - export SRC=$HOME/gopath/src
+  - mkdir -p $SRC/github.com/needkane
+  - export TRAVIS_BUILD_DIR=$SRC/github.com/needkane/n-exporter
+  - cd $TRAVIS_BUILD_DIR
+  - go get github.com/needkane/n-exporter
+  - go build
